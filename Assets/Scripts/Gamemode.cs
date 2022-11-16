@@ -16,7 +16,7 @@ public class Gamemode : MonoBehaviour
             _currentBird = _defaultBird;
         }
 
-        _birdInGame = Instantiate(_currentBird);
+        _birdInGame = Instantiate(_currentBird, new Vector2(-8.5f, 0), Quaternion.identity);
         Time.timeScale = 1;
     }
 
