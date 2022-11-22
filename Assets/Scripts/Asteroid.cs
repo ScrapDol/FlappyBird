@@ -5,28 +5,31 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
+    public static Action onDead;
+    
     [SerializeField] private float _hp;
     [SerializeField] private float _speed;
-    private void OnEnable()
-    {
-        Bullet.onHit += Dead;
-    }
-
-    private void OnDisable()
-    {
-        Bullet.onHit -= Dead;
-    }
 
     private void Update()
     {
-        transform.Translate(Vector3.left * (_speed * Time.fixedDeltaTime));
+        transform.Translate(Vector3.left * (_speed * Time.deltaTime));
     }
 
-    private void Dead(GameObject gameObject)
+
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.CompareTag("Bullet"))
+        {
+            TakeDamage();
+        }
+    }
+
+    private void TakeDamage()
     {
         _hp--;
         if (_hp <= 0)
         {
+            onDead?.Invoke();
             Destroy(gameObject);
         }
     }

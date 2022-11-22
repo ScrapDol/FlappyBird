@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Gamemode : MonoBehaviour
 {
     [SerializeField] private GameObject _defaultBird;
+    [SerializeField] private GameObject _playButton;
     private GameObject _currentBird;
     private GameObject _birdInGame;
 
@@ -25,9 +27,15 @@ public class Gamemode : MonoBehaviour
         Bird.onDead += DeathOfTheBird;
     }
 
+    private void OnDisable()
+    {
+        Bird.onDead -= DeathOfTheBird;
+    }
+
     private void DeathOfTheBird()
     {
         Destroy(_birdInGame);
         Time.timeScale = 0;
+        _playButton.SetActive(true);
     }
 }

@@ -6,8 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Bullet : MonoBehaviour
 {
-    public static Action<GameObject> onHit;
-
     [SerializeField] private float _lifeTime;
     [SerializeField] private float speed;
 
@@ -29,7 +27,6 @@ public class Bullet : MonoBehaviour
     {
         if (col.collider.CompareTag("Enemy"))
         {
-            onHit?.Invoke(col.gameObject);
             Destroy(gameObject);
         }
     }
